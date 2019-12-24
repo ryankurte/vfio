@@ -1,5 +1,5 @@
 #!/bin/bash
 
-sudo virsh detach-device win10 /home/ryan/projects/vfio/mouse.xml
-sudo virsh detach-device win10 /home/ryan/projects/vfio/keyboard.xml
+virsh detach-device win10 ./mouse.xml
+virsh detach-device win10 ./keyboard.xml
 

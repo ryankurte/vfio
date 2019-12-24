@@ -1,0 +1,89 @@
+
+# An example automata that always succeeds
+[[automata]]
+state = "stopped"
+on_init = { func = "virsh", args = ["domstate", "win10"], failure_filter = "shut off", on_success = "running", on_failure = "stopped" }
+
+[automata.states.stopped]
+on_press = { func = "virsh", args = ["start", "win10"], on_success = "running", on_error = "error" }
+on_poll = { func = "virsh", args = ["domstate", "win10"], failure_filter = "shut off", on_success = "running" }
+
+display = { mode = "Colour", r = 0, g = 0, b = 255 }
+
+[automata.states.running]
+on_press = { func = "virsh", args = ["shutdown", "win10"], on_success = "stopped", on_error = "error" }
+on_poll = { func = "virsh", args = ["domstate", "win10"], failure_filter = "shut off", on_failure = "stopped" }
+
+display = { mode = "Colour", r = 0, g = 255, b = 0 }
+
+[automata.states.error]
+on_press = {  on_success = "stopped" }
+display = { mode = "Colour", r = 255, g = 0, b = 0 }
+
+
+[[automata]]
+state = "none"
+
+[automata.states.none]
+display = { mode = "Colour", r = 128, g = 0, b = 128 }
+
+
+[[automata]]
+state = "none"
+
+[automata.states.none]
+display = { mode = "Colour", r = 128, g = 0, b = 128 }
+
+
+# Mouse attach automata
+[[automata]]
+state = "unattached"
+on_init = { func = "virsh", args=["dumpxml", "win10"], success_filter = "product id='0xc083'", on_success = "attached", on_failure = "unattached" }
+
+[automata.states.unattached]
+on_press = { func = "virsh", args=["attach-device", "win10", "./mouse.xml"], on_success = "attached", on_error = "error" }
+display = { mode = "Colour", r = 0, g = 0, b = 255 }
+
+[automata.states.attached]
+on_press = { func = "virsh", args=["detach-device", "win10", "./mouse.xml"], on_success = "unattached", on_error = "error" }
+display = { mode = "Colour", r = 0, g = 255, b = 0 }
+
+[automata.states.error]
+on_press = { on_success = "unattached" }
+display = { mode = "Colour", r = 255, g = 0, b = 0 }
+
+
+# Keyboard attach automata
+[[automata]]
+state = "unattached"
+on_init = { func = "virsh", args=["dumpxml", "win10"], success_filter = "product id='0x008f'", on_success = "attached", on_failure = "unattached" }
+
+[automata.states.unattached]
+on_press = { func = "virsh", args=["attach-device", "win10", "./keyboard.xml"], on_success = "attached", on_error = "error" }
+display = { mode = "Colour", r = 0, g = 0, b = 255 }
+
+[automata.states.attached]
+on_press = { func = "virsh", args=["detach-device", "win10", "./keyboard.xml"], on_success = "unattached", on_error = "error" }
+display = { mode = "Colour", r = 0, g = 255, b = 0 }
+
+[automata.states.error]
+on_press = {  on_success = "unattached" }
+display = { mode = "Colour", r = 255, g = 0, b = 0 }
+
+
+# Webcam attach automata
+[[automata]]
+state = "unattached"
+on_init = { func = "virsh", args=["dumpxml", "win10"], success_filter = "product id='0x0779'", on_success = "attached", on_failure = "unattached" }
+
+[automata.states.unattached]
+on_press = { func = "virsh", args=["attach-device", "win10", "./webcam.xml"], on_success = "attached", on_error = "error" }
+display = { mode = "Colour", r = 0, g = 0, b = 255 }
+
+[automata.states.attached]
+on_press = { func = "virsh", args=["detach-device", "win10", "./webcam.xml"], on_success = "unattached", on_error = "error" }
+display = { mode = "Colour", r = 0, g = 255, b = 0 }
+
+[automata.states.error]
+on_press = { on_success = "unattached" }
+display = { mode = "Colour", r = 255, g = 0, b = 0 }

@@ -1,5 +1,5 @@
 #!/bin/bash
 
-sudo virsh attach-device win10 /home/ryan/projects/vfio/mouse.xml
-sudo virsh attach-device win10 /home/ryan/projects/vfio/keyboard.xml
+virsh attach-device win10 ./mouse.xml
+virsh attach-device win10 ./keyboard.xml
 
