@@ -1,0 +1,6 @@
+<hostdev mode='subsystem' type='mdev' managed='no' model='vfio-pci' display='off'>
+  <source>
+    <address uuid='75a377ae-3cb6-11ea-ae8b-5be9c6e89f95'/>
+  </source>
+</hostdev>
+
