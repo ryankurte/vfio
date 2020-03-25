@@ -8,13 +8,13 @@ on_init = { func = "virsh", args = ["domstate", "win10"], failure_filter = "shut
 on_press = { func = "virsh", args = ["start", "win10"], on_success = "running", on_error = "error" }
 on_poll = { func = "virsh", args = ["domstate", "win10"], failure_filter = "shut off", on_success = "running" }
 
-display = { mode = "Image", file = "./icons/windows.png", invert = true }
+display = { mode = "Image", file = "./icons/windows.png", invert = false }
 
 [automata.states.running]
 on_press = { func = "virsh", args = ["shutdown", "win10"], on_success = "stopped", on_error = "error" }
 on_poll = { func = "virsh", args = ["domstate", "win10"], failure_filter = "shut off", on_failure = "stopped" }
 
-display = { mode = "Image", file = "./icons/windows.png", invert = false }
+display = { mode = "Image", file = "./icons/windows.png", invert = true }
 
 [automata.states.error]
 on_press = {  on_success = "stopped" }
@@ -23,10 +23,25 @@ display = { mode = "Image", file = "./icons/windows.png", invert = false, backgr
 
 
 [[automata]]
-state = "none"
+state = "stopped"
+on_init = { func = "virsh", args = ["domstate", "macOS"], failure_filter = "shut off", on_success = "running", on_failure = "stopped" }
 
-[automata.states.none]
-display = { mode = "Colour", r = 0, g = 0, b = 0 }
+[automata.states.stopped]
+on_press = { func = "virsh", args = ["start", "macOS"], on_success = "running", on_error = "error" }
+on_poll = { func = "virsh", args = ["domstate", "macOS"], failure_filter = "shut off", on_success = "running" }
+
+display = { mode = "Image", file = "./icons/macos.png", invert = false }
+
+[automata.states.running]
+on_press = { func = "virsh", args = ["shutdown", "macOS"], on_success = "stopped", on_error = "error" }
+on_poll = { func = "virsh", args = ["domstate", "macOS"], failure_filter = "shut off", on_failure = "stopped" }
+
+display = { mode = "Image", file = "./icons/macos.png", invert = true }
+
+[automata.states.error]
+on_press = {  on_success = "stopped" }
+
+display = { mode = "Image", file = "./icons/macos.png", invert = false, background = { r = 255, g = 0, b = 0} }
 
 
 [[automata]]
@@ -44,13 +59,13 @@ on_init = { func = "virsh", args=["dumpxml", "win10"], success_filter = "product
 [automata.states.unattached]
 on_press = { func = "virsh", args=["attach-device", "win10", "./scripts/mouse.xml"], on_success = "attached", on_error = "error" }
 
-display = { mode = "Image", file = "./icons/mouse.png", invert = true }
+display = { mode = "Image", file = "./icons/mouse.png", invert = false }
 
 
 [automata.states.attached]
 on_press = { func = "virsh", args=["detach-device", "win10", "./scripts/mouse.xml"], on_success = "unattached", on_error = "error" }
 
-display = { mode = "Image", file = "./icons/mouse.png", invert = false }
+display = { mode = "Image", file = "./icons/mouse.png", invert = true }
 
 
 [automata.states.error]
@@ -67,12 +82,12 @@ on_init = { func = "virsh", args=["dumpxml", "win10"], success_filter = "product
 [automata.states.unattached]
 on_press = { func = "virsh", args=["attach-device", "win10", "./scripts/keyboard.xml"], on_success = "attached", on_error = "error" }
 
-display = { mode = "Image", file = "./icons/keyboard.png", invert = true }
+display = { mode = "Image", file = "./icons/keyboard.png", invert = false }
 
 [automata.states.attached]
 on_press = { func = "virsh", args=["detach-device", "win10", "./scripts/keyboard.xml"], on_success = "unattached", on_error = "error" }
 
-display = { mode = "Image", file = "./icons/keyboard.png", invert = false }
+display = { mode = "Image", file = "./icons/keyboard.png", invert = true }
 
 [automata.states.error]
 on_press = {  on_success = "unattached" }
@@ -88,14 +103,17 @@ on_init = { func = "virsh", args=["dumpxml", "win10"], success_filter = "product
 [automata.states.unattached]
 on_press = { func = "virsh", args=["attach-device", "win10", "./scripts/webcam.xml"], on_success = "attached", on_error = "error" }
 
-display = { mode = "Image", file = "./icons/camera.png", invert = true }
+display = { mode = "Image", file = "./icons/camera.png", invert = false }
 
 [automata.states.attached]
 on_press = { func = "virsh", args=["detach-device", "win10", "./scripts/webcam.xml"], on_success = "unattached", on_error = "error" }
 
-display = { mode = "Image", file = "./icons/camera.png", invert = false }
+display = { mode = "Image", file = "./icons/camera.png", invert = true }
 
 [automata.states.error]
 on_press = { on_success = "unattached" }
 
 display = { mode = "Image", file = "./icons/camera.png", invert = false, background = { r = 255, g = 0, b = 0} }
+
+
+
